@@ -7,6 +7,7 @@
     "keywords": [],
     "license": "Apache-2.0",
     "scripts": {
+        "prepare": "git config --local core.hooksPath .githook || echo 'Can not set git hooks'",
         "images": "imagemin '_site/assets/images' --out-dir='_site/assets/images'",
         "install:playground": "cd src/playground && npm install --no-package-lock",
         "watch:sass": "node-sass --watch src/assets/scss -o src/assets/css",
@@ -21,6 +22,12 @@
         "lint": "eslint --ext=.js,.jsx .",
         "fix": "npm run lint -- --fix",
         "postinstall": "npm run install:playground"
+    },
+    "lint-staged": {
+        "**/*.{js,jsx}": "eslint --fix"
+    },
+    "gitHooks": {
+        "pre-commit": "lint-staged"
     },
     "devDependencies": {
         "@11ty/eleventy": "^0.11.1",
@@ -43,6 +50,7 @@
         "express": "^4.17.3",
         "imagemin": "^8.0.1",
         "imagemin-cli": "^7.0.0",
+        "lint-staged": "^12.4.1",
         "morgan": "^1.10.0",
         "node-polyfill-webpack-plugin": "^1.1.4",
         "node-sass": "^6.0.1",
